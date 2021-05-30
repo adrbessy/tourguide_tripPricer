@@ -8,16 +8,29 @@
 		<version>2.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com</groupId>
 	<artifactId>tourguide_tripPricer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tourguide_tripPricer</name>
-	<description>tourguide_tripPricer application with Spring Boot</description>
+	<description>Tour Guide tripPricer microservice with Spring Boot</description>
+	
 	<properties>
 		<java.version>1.8</java.version>
+		<spring-cloud.version>2020.0.2</spring-cloud.version>
 	</properties>
 	
 	<dependencies>
+	
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 	
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -82,6 +95,13 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>nl.jqno.equalsverifier</groupId>
+		    <artifactId>equalsverifier</artifactId>
+		    <version>3.5.1</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
 		    <groupId>org.junit.jupiter</groupId>
 		    <artifactId>junit-jupiter-api</artifactId>
 		    <scope>test</scope>
@@ -101,15 +121,63 @@
 		</dependency>
 		
 		<dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-checkstyle-plugin</artifactId>
+		    <version>3.1.1</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-site-plugin</artifactId>
+		    <version>3.9.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
 	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 
 	<build>
 		<plugins>
+		
+			<plugin>
+		        <groupId>com.github.spotbugs</groupId>
+		        <artifactId>spotbugs-maven-plugin</artifactId>
+		        <version>4.2.0</version>
+		        <dependencies>
+				    <dependency>
+				      <groupId>com.github.spotbugs</groupId>
+				      <artifactId>spotbugs</artifactId>
+				      <version>4.2.0</version>
+				    </dependency>
+				</dependencies>
+			</plugin>
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -122,7 +190,59 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			
 		</plugins>
 	</build>
+	
+	<!-- =============================================================== -->
+    <!-- Reporting handling -->
+    <!-- =============================================================== -->
+    <reporting>
+        <plugins>
+		    <!-- SpotBugs -->
+		    <plugin>
+			      <groupId>com.github.spotbugs</groupId>
+			      <artifactId>spotbugs-maven-plugin</artifactId>
+			      <version>4.2.0</version>
+			      <configuration>
+			      <maxRank>17</maxRank>
+			      </configuration>
+		    </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-report-plugin</artifactId>
+		        <version>3.0.0-M5</version>
+	      	</plugin>
+	      	<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-project-info-reports-plugin</artifactId>
+		        <version>2.6</version>
+	      	</plugin>
+		  </plugins>
+    </reporting>
+    
+    
+	
 
 </project>

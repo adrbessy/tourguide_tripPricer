@@ -1,4 +1,4 @@
-package com.tourguide.configuration;
+package com.tourguide_tripPricer.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,7 +1,7 @@
-package com.tourguide.controller;
+package com.tourguide_tripPricer.controller;
 
 
-import com.tourguide.service.TripPricerService;
+import com.tourguide_tripPricer.service.TripPricerService;
 import java.util.List;
 import java.util.UUID;
 import org.apache.logging.log4j.LogManager;

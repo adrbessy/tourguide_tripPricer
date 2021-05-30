@@ -1,4 +1,4 @@
-package com.tourguide.model;
+package com.tourguide_tripPricer.model;
 
 import java.util.UUID;
 import javax.persistence.Entity;
